@@ -2,239 +2,163 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Vocabulary Quiz (26–50)</title>
+<title>Vocabulary Quiz</title>
 
 <style>
 body{
   font-family: Arial, sans-serif;
   background: linear-gradient(to right,#ffecd2,#fcb69f);
-  padding:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
-.container{
-  max-width:800px;
-  margin:auto;
+.quiz-box{
   background:#fff;
+  width:90%;
+  max-width:500px;
   padding:20px;
   border-radius:15px;
 }
-h1{
+h2{
   text-align:center;
   color:#ff5722;
 }
-.question{
-  margin:15px 0;
-  padding:15px;
-  background:#f9f9f9;
-  border-radius:10px;
-}
-.question p{
-  font-weight:bold;
-}
-label{
-  display:block;
-  margin:5px 0;
-  cursor:pointer;
-}
-input[type="radio"]{
-  margin-right:8px;
+.option{
+  margin:8px 0;
 }
 button{
   width:100%;
-  padding:12px;
+  margin-top:15px;
+  padding:10px;
   background:#4caf50;
-  color:white;
-  font-size:18px;
+  color:#fff;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
+  font-size:16px;
   cursor:pointer;
 }
 button:hover{
   background:#43a047;
 }
+.result{
+  text-align:center;
+}
+.correct{
+  color:green;
+}
+.wrong{
+  color:red;
+}
 </style>
 </head>
 
 <body>
-<div class="container">
-<h1>Vocabulary Quiz (26 – 50)</h1>
 
-<div class="question">
-<p>26. Honourable means?</p>
-<label><input type="radio" name="q26">Deserving respect</label>
-<label><input type="radio" name="q26">Very weak</label>
-<label><input type="radio" name="q26">Grass field</label>
+<div class="quiz-box">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+  <button onclick="nextQuestion()">Next</button>
 </div>
 
-<div class="question">
-<p>27. Dedicated means?</p>
-<label><input type="radio" name="q27">Devoted or committed</label>
-<label><input type="radio" name="q27">Feeling ashamed</label>
-<label><input type="radio" name="q27">Barrier</label>
-</div>
+<script>
+const quiz = [
+ {q:"Honourable means?", o:["Deserving respect","Weak or ill","Grass field"], a:0},
+ {q:"Dedicated means?", o:["Devoted or committed","Feeling ashamed","Barrier"], a:0},
+ {q:"Puzzled means?", o:["Confused","Prepared","Soldier"], a:0},
+ {q:"Meadows means?", o:["Grass fields","Argument","Blanket"], a:0},
+ {q:"Foiled means?", o:["Failed or stopped","Moved suddenly","Patriot"], a:0},
+ {q:"Dirked means?", o:["Stabbed with a knife","Weak","Area"], a:0},
+ {q:"Faint means?", o:["Weak or light","Barrier","Soldier"], a:0},
+ {q:"Migrated means?", o:["Moved from one place to another","Begged","Prepared"], a:0},
+ {q:"Glib means?", o:["Speaking smoothly but not sincerely","Very beautiful","Blanket"], a:0},
+ {q:"Headed means?", o:["Went towards","Confused","Pain"], a:0},
+ {q:"Pleaded means?", o:["Begged","Pinched","Area"], a:0},
+ {q:"Fence means?", o:["Barrier or boundary","Think deeply","Meet suddenly"], a:0},
+ {q:"Quilt means?", o:["Thick blanket","Patriot","Weak"], a:0},
+ {q:"Nipped means?", o:["Pinched or bitten lightly","Prepared","Area"], a:0},
+ {q:"Brood means?", o:["Think deeply","Grass field","Begged"], a:0},
+ {q:"Drafted means?", o:["Prepared","Weak","Meet suddenly"], a:0},
+ {q:"Patriot means?", o:["One who loves his country","Soldier","Barrier"], a:0},
+ {q:"Sepoy means?", o:["Indian soldier","Weak","Area"], a:0},
+ {q:"Torments means?", o:["Great pains or sufferings","Prepared","Field"], a:0},
+ {q:"Infirm means?", o:["Weak or ill","Think deeply","Barrier"], a:0},
+ {q:"Encounter means?", o:["Meet suddenly","Begged","Field"], a:0},
+ {q:"Regions means?", o:["Areas","Pain","Weak"], a:0},
+ {q:"Hell means?", o:["Place of suffering","Barrier","Blanket"], a:0},
+ {q:"Embarrassed means?", o:["Feeling ashamed","Prepared","Soldier"], a:0},
+ {q:"Submissive means?", o:["Willing to obey","Think deeply","Area"], a:0}
+];
 
-<div class="question">
-<p>28. Puzzled means?</p>
-<label><input type="radio" name="q28">Confused</label>
-<label><input type="radio" name="q28">Prepared</label>
-<label><input type="radio" name="q28">Soldier</label>
-</div>
+let index = 0;
+let score = 0;
+let wrongAnswers = [];
 
-<div class="question">
-<p>29. Meadows means?</p>
-<label><input type="radio" name="q29">Grass fields</label>
-<label><input type="radio" name="q29">Thick blanket</label>
-<label><input type="radio" name="q29">Argument</label>
-</div>
+function loadQuestion(){
+  const q = quiz[index];
+  document.getElementById("question").innerText = 
+  `Q${index+26}. ${q.q}`;
 
-<div class="question">
-<p>30. Foiled means?</p>
-<label><input type="radio" name="q30">Failed or stopped</label>
-<label><input type="radio" name="q30">Moved suddenly</label>
-<label><input type="radio" name="q30">Loves country</label>
-</div>
+  let optionsHTML = "";
+  q.o.forEach((opt,i)=>{
+    optionsHTML += `
+    <div class="option">
+      <label>
+        <input type="radio" name="option" value="${i}">
+        ${opt}
+      </label>
+    </div>`;
+  });
+  document.getElementById("options").innerHTML = optionsHTML;
+}
 
-<div class="question">
-<p>31. Dirked means?</p>
-<label><input type="radio" name="q31">Stabbed with a knife</label>
-<label><input type="radio" name="q31">Weak or ill</label>
-<label><input type="radio" name="q31">Area</label>
-</div>
+function nextQuestion(){
+  const selected = document.querySelector('input[name="option"]:checked');
+  if(!selected){
+    alert("Select an answer!");
+    return;
+  }
 
-<div class="question">
-<p>32. Faint means?</p>
-<label><input type="radio" name="q32">Weak or light</label>
-<label><input type="radio" name="q32">Barrier</label>
-<label><input type="radio" name="q32">Indian soldier</label>
-</div>
+  if(parseInt(selected.value) === quiz[index].a){
+    score++;
+  }else{
+    wrongAnswers.push({
+      question: quiz[index].q,
+      correct: quiz[index].o[quiz[index].a]
+    });
+  }
 
-<div class="question">
-<p>33. Migrated means?</p>
-<label><input type="radio" name="q33">Moved from one place to another</label>
-<label><input type="radio" name="q33">Begged</label>
-<label><input type="radio" name="q33">Prepared</label>
-</div>
+  index++;
+  if(index < quiz.length){
+    loadQuestion();
+  }else{
+    showResult();
+  }
+}
 
-<div class="question">
-<p>34. Glib means?</p>
-<label><input type="radio" name="q34">Speaking smoothly but not sincerely</label>
-<label><input type="radio" name="q34">Very beautiful</label>
-<label><input type="radio" name="q34">Thick blanket</label>
-</div>
+function showResult(){
+  let html = `
+    <div class="result">
+      <h2>Quiz Completed 🎉</h2>
+      <p><b>Your Score:</b> ${score} / ${quiz.length}</p>
+  `;
 
-<div class="question">
-<p>35. Headed means?</p>
-<label><input type="radio" name="q35">Went towards</label>
-<label><input type="radio" name="q35">Confused</label>
-<label><input type="radio" name="q35">Great pain</label>
-</div>
+  if(wrongAnswers.length > 0){
+    html += "<h3>Correct Answers:</h3>";
+    wrongAnswers.forEach(w=>{
+      html += `<p class="wrong">
+      ${w.question} <br>
+      <span class="correct">Correct: ${w.correct}</span>
+      </p>`;
+    });
+  }
+  html += "</div>";
 
-<div class="question">
-<p>36. Pleaded means?</p>
-<label><input type="radio" name="q36">Begged</label>
-<label><input type="radio" name="q36">Pinched lightly</label>
-<label><input type="radio" name="q36">Area</label>
-</div>
+  document.querySelector(".quiz-box").innerHTML = html;
+}
 
-<div class="question">
-<p>37. Fence means?</p>
-<label><input type="radio" name="q37">Barrier or boundary</label>
-<label><input type="radio" name="q37">Think deeply</label>
-<label><input type="radio" name="q37">Meet suddenly</label>
-</div>
+loadQuestion();
+</script>
 
-<div class="question">
-<p>38. Quilt means?</p>
-<label><input type="radio" name="q38">Thick blanket</label>
-<label><input type="radio" name="q38">Loves country</label>
-<label><input type="radio" name="q38">Weak</label>
-</div>
-
-<div class="question">
-<p>39. Nipped means?</p>
-<label><input type="radio" name="q39">Pinched or bitten lightly</label>
-<label><input type="radio" name="q39">Prepared</label>
-<label><input type="radio" name="q39">Area</label>
-</div>
-
-<div class="question">
-<p>40. Brood means?</p>
-<label><input type="radio" name="q40">Think deeply</label>
-<label><input type="radio" name="q40">Grass field</label>
-<label><input type="radio" name="q40">Begged</label>
-</div>
-
-<div class="question">
-<p>41. Drafted means?</p>
-<label><input type="radio" name="q41">Prepared</label>
-<label><input type="radio" name="q41">Weak or ill</label>
-<label><input type="radio" name="q41">Meet suddenly</label>
-</div>
-
-<div class="question">
-<p>42. Patriot means?</p>
-<label><input type="radio" name="q42">One who loves his country</label>
-<label><input type="radio" name="q42">Indian soldier</label>
-<label><input type="radio" name="q42">Barrier</label>
-</div>
-
-<div class="question">
-<p>43. Sepoy means?</p>
-<label><input type="radio" name="q43">Indian soldier</label>
-<label><input type="radio" name="q43">Very weak</label>
-<label><input type="radio" name="q43">Area</label>
-</div>
-
-<div class="question">
-<p>44. Torments means?</p>
-<label><input type="radio" name="q44">Great pains or sufferings</label>
-<label><input type="radio" name="q44">Prepared</label>
-<label><input type="radio" name="q44">Grass field</label>
-</div>
-
-<div class="question">
-<p>45. Infirm means?</p>
-<label><input type="radio" name="q45">Weak or ill</label>
-<label><input type="radio" name="q45">Think deeply</label>
-<label><input type="radio" name="q45">Barrier</label>
-</div>
-
-<div class="question">
-<p>46. Encounter means?</p>
-<label><input type="radio" name="q46">Meet suddenly</label>
-<label><input type="radio" name="q46">Begged</label>
-<label><input type="radio" name="q46">Grass field</label>
-</div>
-
-<div class="question">
-<p>47. Regions means?</p>
-<label><input type="radio" name="q47">Areas</label>
-<label><input type="radio" name="q47">Great pain</label>
-<label><input type="radio" name="q47">Weak</label>
-</div>
-
-<div class="question">
-<p>48. Hell means?</p>
-<label><input type="radio" name="q48">Place of suffering</label>
-<label><input type="radio" name="q48">Barrier</label>
-<label><input type="radio" name="q48">Blanket</label>
-</div>
-
-<div class="question">
-<p>49. Embarrassed means?</p>
-<label><input type="radio" name="q49">Feeling ashamed</label>
-<label><input type="radio" name="q49">Prepared</label>
-<label><input type="radio" name="q49">Soldier</label>
-</div>
-
-<div class="question">
-<p>50. Submissive means?</p>
-<label><input type="radio" name="q50">Willing to obey</label>
-<label><input type="radio" name="q50">Think deeply</label>
-<label><input type="radio" name="q50">Area</label>
-</div>
-
-<button>Submit Quiz</button>
-
-</div>
 </body>
 </html>
